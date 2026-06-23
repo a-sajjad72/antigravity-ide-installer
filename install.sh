@@ -8,9 +8,9 @@ echo "Installing Antigravity IDE installer..."
 tmpfile=$(mktemp)
 trap 'rm -f "$tmpfile"' EXIT
 
-curl -fsSL 
-"https://raw.githubusercontent.com/${REPO}/main/update-antigravity-ide" 
--o "$tmpfile"
+curl -fsSL \
+    "https://raw.githubusercontent.com/${REPO}/main/update-antigravity-ide" \
+    -o "$tmpfile"
 
 sudo install -m 0755 "$tmpfile" /usr/local/bin/update-antigravity-ide
 
