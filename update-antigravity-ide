@@ -31,9 +31,6 @@ icon_file="/usr/share/icons/hicolor/512x512/apps/antigravity-ide.png"
 
 archive_top_dir="Antigravity IDE"
 
-legacy_profile="$SUDO_USER_HOME/.config/Antigravity"
-new_profile="$SUDO_USER_HOME/.config/Antigravity IDE"
-
 ###############################################################################
 # Determine invoking user's home directory
 ###############################################################################
@@ -43,6 +40,9 @@ if [ -n "${SUDO_USER:-}" ]; then
 else
     SUDO_USER_HOME="$HOME"
 fi
+
+legacy_profile="$SUDO_USER_HOME/.config/Antigravity"
+new_profile="$SUDO_USER_HOME/.config/Antigravity IDE"
 
 backup_root="$SUDO_USER_HOME/.cache/antigravity-ide-backups"
 
