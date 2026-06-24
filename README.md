@@ -48,24 +48,24 @@ The installer runs a series of checks, updates, and safety operations to handle 
 ```mermaid
 flowchart TD
     Start([Start script]) --> CheckSudo{Is Root/Sudo?}
-    CheckSudo -- No --> ErrorSudo[Exit: Run with Sudo]
-    CheckSudo -- Yes --> CheckAction{Action Mode}
+    CheckSudo -->|No| ErrorSudo[Exit: Run with Sudo]
+    CheckSudo -->|Yes| CheckAction{Action Mode}
 
-    CheckAction -- --rollback --> Rollback[Restore Previous Install]
-    CheckAction -- --check --> CheckVersion[Compare Local vs Remote Version]
-    CheckAction -- install/upgrade --> CheckDeps{Dependencies installed?}
+    CheckAction -->|--rollback| Rollback[Restore Previous Install]
+    CheckAction -->|--check| CheckVersion[Compare Local vs Remote Version]
+    CheckAction -->|install/upgrade| CheckDeps{Dependencies installed?}
 
-    CheckDeps -- No --> ErrorDeps[Exit: Install dependencies]
-    CheckDeps -- Yes --> BackupProfile[Backup user profile to cache]
+    CheckDeps -->|No| ErrorDeps[Exit: Install dependencies]
+    CheckDeps -->|Yes| BackupProfile[Backup user profile to cache]
 
     BackupProfile --> MigLegacy{Legacy APT profile exists?}
-    MigLegacy -- Yes --> MigAction[Migrate profile to IDE folder]
-    MigLegacy -- No --> FetchMetadata[Fetch latest release info]
+    MigLegacy -->|Yes| MigAction[Migrate profile to IDE folder]
+    MigLegacy -->|No| FetchMetadata[Fetch latest release info]
     MigAction --> FetchMetadata
 
     FetchMetadata --> CompareVer{Is up-to-date?}
-    CompareVer -- Yes --> ExitUpToDate[Exit: Already up-to-date]
-    CompareVer -- No --> Download[Download and Extract tar.gz to temp folder]
+    CompareVer -->|Yes| ExitUpToDate[Exit: Already up-to-date]
+    CompareVer -->|No| Download[Download and Extract tar.gz to temp folder]
 
     Download --> ConfigureSandbox[Set chrome-sandbox permissions to root:4755]
     ConfigureSandbox --> ShuffleDirs[Rotate active install directory with previous]
